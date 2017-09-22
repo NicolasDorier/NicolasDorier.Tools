@@ -55,13 +55,21 @@ namespace StandardConfiguration
 				.AddCommandLineEx(args, CreateCommandLineApplication)
 				.Build();
 
-
+			var confFile = conf["conf"];
+			if(confFile != null && File.Exists(confFile))
+			{
+				conf = new ConfigurationBuilder()
+				.AddEnvironmentVariables()
+				.AddIniFile(confFile)
+				.AddCommandLineEx(args, CreateCommandLineApplication)
+				.Build();
+			}
 
 			var datadir = conf["datadir"] ?? GetDefaultDataDir(conf);
 			if(!Directory.Exists(datadir))
 				Directory.CreateDirectory(datadir);
 			Logger.LogInformation($"Data Directory: " + Path.GetFullPath(datadir));
-			var confFile = conf["conf"] ?? GetDefaultConfigurationFile(conf);
+			confFile = conf["conf"] ?? GetDefaultConfigurationFile(conf);
 			Logger.LogInformation($"Configuration File: " + Path.GetFullPath(confFile));
 
 			EnsureConfigFileExists(confFile, conf);
