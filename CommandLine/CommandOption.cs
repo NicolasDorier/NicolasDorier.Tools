@@ -127,7 +127,7 @@ namespace CommandLine
 							{
 								boolValue = true;
 							}
-							if(value.Equals("0", StringComparison.OrdinalIgnoreCase))
+							else if(value.Equals("0", StringComparison.OrdinalIgnoreCase))
 							{
 								boolValue = false;
 							}
