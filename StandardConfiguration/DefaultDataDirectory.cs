@@ -7,7 +7,7 @@ namespace StandardConfiguration
 {
     public class DefaultDataDirectory
     {
-		public static string GetDirectory(string appDirectory, string subDirectory)
+		public static string GetDirectory(string appDirectory, string subDirectory, bool createIfNotExists = true)
 		{
 			string directory = null;
 			var home = Environment.GetEnvironmentVariable("HOME");
@@ -34,7 +34,7 @@ namespace StandardConfiguration
 				Directory.CreateDirectory(directory);
 			}
 			directory = Path.Combine(directory, subDirectory);
-			if(!Directory.Exists(directory))
+			if(createIfNotExists && !Directory.Exists(directory))
 			{
 				Directory.CreateDirectory(directory);
 			}
