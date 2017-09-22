@@ -19,7 +19,7 @@ namespace StandardConfiguration
 		protected abstract CommandLineApplication CreateCommandLineApplicationCore();
 		protected abstract string GetDefaultDataDir(IConfiguration conf);
 		protected abstract string GetDefaultConfigurationFile(IConfiguration conf);
-		protected abstract string GetDefaultConfigurationFileTemplate();
+		protected abstract string GetDefaultConfigurationFileTemplate(IConfiguration conf);
 
 		protected abstract IPEndPoint GetDefaultEndpoint(IConfiguration conf);
 
@@ -108,7 +108,7 @@ namespace StandardConfiguration
 			if(!File.Exists(confFile))
 			{
 				Logger.LogInformation("Creating configuration file");
-				File.WriteAllText(confFile, GetDefaultConfigurationFileTemplate());
+				File.WriteAllText(confFile, GetDefaultConfigurationFileTemplate(conf));
 			}
 		}
 
