@@ -82,29 +82,30 @@ namespace StandardConfiguration
 				.Build();
 
 			var binds = app.Options.Where(o => o.LongName == "bind").SelectMany(o => o.Values.SelectMany(v => v.Split(';'))).ToList();
+
+
 			List<KeyValuePair<string, string>> additionalSettings = new List<KeyValuePair<string, string>>();
-
-			var defaultEndpoint = GetDefaultEndpoint(conf);
-			if(!int.TryParse(finalConf["port"] ?? "", out int defaultPort))
-				defaultPort = defaultEndpoint.Port;
-			if(binds.Count == 0)
+			if(finalConf["port"] != null || binds.Count != 0)
 			{
-				binds.Add($"{defaultEndpoint.Address}:{defaultPort}");
-			}
-
-			for(int i = 0; i < binds.Count; i++)
-			{
-				var endpoint = ConvertToEndpoint(binds[i], defaultPort);
-				binds[i] = $"{endpoint.Address}:{endpoint.Port}";
+				var defaultEndpoint = GetDefaultEndpoint(conf);
+				if(!int.TryParse(finalConf["port"] ?? "", out int defaultPort))
+					defaultPort = defaultEndpoint.Port;
+				if(binds.Count == 0)
+				{
+					binds.Add($"{defaultEndpoint.Address}:{defaultPort}");
+				}
+				for(int i = 0; i < binds.Count; i++)
+				{
+					var endpoint = ConvertToEndpoint(binds[i], defaultPort);
+					binds[i] = $"{endpoint.Address}:{endpoint.Port}";
+				}
+				additionalSettings.Add(new KeyValuePair<string, string>("urls", string.Join(";", binds.Select(l => $"http://{l}/"))));
 			}
 
 			finalConf = new ConfigurationBuilder()
 			.AddEnvironmentVariables()
 			.AddIniFile(confFile)
-			.AddInMemoryCollection(new[]
-			{
-					new KeyValuePair<string, string>("server.urls", string.Join(";", binds.Select(l=>$"http://{l}/"))),
-			})
+			.AddInMemoryCollection(additionalSettings.ToArray())
 			.AddCommandLineEx(args, CreateCommandLineApplication)
 			.Build();
 
