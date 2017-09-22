@@ -77,8 +77,8 @@ namespace StandardConfiguration
 			List<KeyValuePair<string, string>> additionalSettings = new List<KeyValuePair<string, string>>();
 
 			var defaultEndpoint = GetDefaultEndpoint(conf);
-			int defaultPort = defaultEndpoint.Port;
-			int.TryParse(finalConf["port"], out defaultPort);
+			if(!int.TryParse(finalConf["port"] ?? "", out int defaultPort))
+				defaultPort = defaultEndpoint.Port;
 			if(binds.Count == 0)
 			{
 				binds.Add($"{defaultEndpoint.Address}:{defaultPort}");
