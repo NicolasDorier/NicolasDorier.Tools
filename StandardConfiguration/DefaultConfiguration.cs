@@ -12,7 +12,7 @@ namespace StandardConfiguration
 {
 	public abstract class DefaultConfiguration
 	{
-		protected ILogger Logger
+		public ILogger Logger
 		{
 			get; set;
 		} = NullLogger.Instance;
