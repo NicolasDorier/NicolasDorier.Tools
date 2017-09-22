@@ -139,7 +139,11 @@ namespace StandardConfiguration
 
 			if(!IPAddress.TryParse(hostOut, out ip))
 			{
-				ip = Dns.GetHostEntry(hostOut).AddressList.FirstOrDefault();
+				try
+				{
+					ip = Dns.GetHostEntry(hostOut).AddressList.FirstOrDefault();
+				}
+				catch { }
 				if(ip == null)
 					throw new FormatException("Invalid IP Endpoint");
 			}
