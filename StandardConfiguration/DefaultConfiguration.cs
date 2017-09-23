@@ -85,7 +85,7 @@ namespace StandardConfiguration
 
 
 			List<KeyValuePair<string, string>> additionalSettings = new List<KeyValuePair<string, string>>();
-			if(finalConf["port"] != null || binds.Count != 0)
+			if(finalConf["port"] != null || binds.Count != 0 || string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ASPNETCORE_URLS")))
 			{
 				var defaultEndpoint = GetDefaultEndpoint(conf);
 				if(!int.TryParse(finalConf["port"] ?? "", out int defaultPort))
