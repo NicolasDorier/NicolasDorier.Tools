@@ -61,11 +61,13 @@ namespace CommandLine.Configuration
 				if(opt.OptionType == CommandOptionType.SingleValue)
 					data[opt.LongName] = opt.Value();
 				if(opt.OptionType == CommandOptionType.MultipleValue)
-					throw new NotSupportedException("MultiValue options are not supported");
+				{
+					//MultiValue options are not supported
+				}
 			}
 			foreach(var arg in app.Arguments.Where(o => o.Value != null))
 			{
-				throw new NotSupportedException("Arguments not supported");
+				//Arguments not supported
 			}
 			Data = data;
 		}
