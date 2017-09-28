@@ -21,6 +21,11 @@ namespace StandardConfiguration
 		protected abstract string GetDefaultConfigurationFile(IConfiguration conf);
 		protected abstract string GetDefaultConfigurationFileTemplate(IConfiguration conf);
 
+		public abstract string EnvironmentVariablePrefix
+		{
+			get;
+		}
+
 		protected abstract IPEndPoint GetDefaultEndpoint(IConfiguration conf);
 
 		public CommandLineApplication CreateCommandLineApplication()
@@ -51,7 +56,7 @@ namespace StandardConfiguration
 
 
 			var conf = new ConfigurationBuilder()
-				.AddEnvironmentVariables()
+				.AddEnvironmentVariables(EnvironmentVariablePrefix)
 				.AddCommandLineEx(args, CreateCommandLineApplication)
 				.Build();
 
@@ -59,7 +64,7 @@ namespace StandardConfiguration
 			if(confFile != null && File.Exists(confFile))
 			{
 				conf = new ConfigurationBuilder()
-				.AddEnvironmentVariables()
+				.AddEnvironmentVariables(EnvironmentVariablePrefix)
 				.AddIniFile(confFile)
 				.AddCommandLineEx(args, CreateCommandLineApplication)
 				.Build();
@@ -76,7 +81,7 @@ namespace StandardConfiguration
 
 
 			var finalConf = new ConfigurationBuilder()
-				.AddEnvironmentVariables()
+				.AddEnvironmentVariables(EnvironmentVariablePrefix)
 				.AddIniFile(confFile)
 				.AddCommandLineEx(args, CreateCommandLineApplication)
 				.Build();
@@ -103,7 +108,7 @@ namespace StandardConfiguration
 			}
 
 			finalConf = new ConfigurationBuilder()
-			.AddEnvironmentVariables()
+			.AddEnvironmentVariables(EnvironmentVariablePrefix)
 			.AddIniFile(confFile)
 			.AddInMemoryCollection(additionalSettings.ToArray())
 			.AddCommandLineEx(args, CreateCommandLineApplication)
