@@ -88,6 +88,9 @@ namespace StandardConfiguration
 
 			var binds = app.Options.Where(o => o.LongName == "bind").SelectMany(o => o.Values.SelectMany(v => v.Split(';'))).ToList();
 
+			var confBind = finalConf["bind"];
+			if(!string.IsNullOrEmpty(confBind))
+				binds.Add(confBind);
 
 			List<KeyValuePair<string, string>> additionalSettings = new List<KeyValuePair<string, string>>();
 			if(finalConf["port"] != null || binds.Count != 0 || string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ASPNETCORE_URLS")))
