@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard1.3</TargetFramework>
-		<Version>1.0.0.1</Version>
+		<Version>1.0.0.2</Version>
 		<PackageId>NicolasDorier.CommandLine</PackageId>
 		<Description>Fork of dotnet cli classes for command line parsing</Description>
 		<PackageProjectUrl>https://github.com/NicolasDorier/NicolasDorier.Tools</PackageProjectUrl>
