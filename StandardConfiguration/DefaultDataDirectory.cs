@@ -42,6 +42,10 @@ namespace StandardConfiguration
                     Directory.CreateDirectory(directory);
                 }
             }
+            else
+            {
+                directory = Path.Combine(directory, subDirectory);
+            }
             return directory;
         }
     }
