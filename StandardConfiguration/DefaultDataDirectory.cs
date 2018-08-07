@@ -23,8 +23,8 @@ namespace StandardConfiguration
                 {
                     directory = localAppData;
                     directory = Path.Combine(directory, appDirectory);
-                }
-                else
+                } 
+                else (createIfNotExists)
                 {
                     throw new DirectoryNotFoundException("Could not find suitable datadir");
                 }

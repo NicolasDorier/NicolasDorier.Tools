@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	  <PackageId>NicolasDorier.StandardConfiguration</PackageId>
-	  <Version>1.0.0.16</Version>
+	  <Version>1.0.0.17</Version>
 	  <Description>Default configuration helper for using commandline to create Configuration with optional ini file in app's folder</Description>
 	  <PackageProjectUrl>https://github.com/NicolasDorier/NicolasDorier.Tools</PackageProjectUrl>
 	  <RepositoryUrl>https://github.com/NicolasDorier/NicolasDorier.Tools</RepositoryUrl>
