@@ -11,14 +11,14 @@ namespace StandardConfiguration
         {
             string directory = null;
             var home = Environment.GetEnvironmentVariable("HOME");
-            if(!string.IsNullOrEmpty(home))
+            var localAppData = Environment.GetEnvironmentVariable("APPDATA");
+            if (!string.IsNullOrEmpty(home) && string.IsNullOrEmpty(localAppData))
             {
                 directory = home;
                 directory = Path.Combine(directory, "." + appDirectory.ToLowerInvariant());
             }
             else
             {
-                var localAppData = Environment.GetEnvironmentVariable("APPDATA");
                 if(!string.IsNullOrEmpty(localAppData))
                 {
                     directory = localAppData;
@@ -26,7 +26,7 @@ namespace StandardConfiguration
                 }
                 else if(createIfNotExists)
                 {
-                    throw new DirectoryNotFoundException("Could not find suitable datadir");
+                    throw new DirectoryNotFoundException("Could not find suitable datadir environment variables HOME or APPDATA are not set");
                 }
                 else
                     return string.Empty;
