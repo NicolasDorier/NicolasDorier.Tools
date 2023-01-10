@@ -38,8 +38,11 @@ namespace StandardConfiguration
 			return app;
 		}
 
-
 		public IConfiguration CreateConfiguration(string[] args)
+		{
+			return CreateConfigurationBuilder(args).Build();
+		}
+		public IConfigurationBuilder CreateConfigurationBuilder(string[] args)
 		{
 			var app = CreateCommandLineApplication();
 
@@ -110,14 +113,11 @@ namespace StandardConfiguration
 				additionalSettings.Add(new KeyValuePair<string, string>("urls", string.Join(";", binds.Select(l => $"http://{l}/"))));
 			}
 
-			finalConf = new ConfigurationBuilder()
+			return new ConfigurationBuilder()
 			.AddEnvironmentVariables(EnvironmentVariablePrefix)
 			.AddIniFile(confFile)
 			.AddInMemoryCollection(additionalSettings.ToArray())
-			.AddCommandLineEx(args, CreateCommandLineApplication)
-			.Build();
-
-			return finalConf;
+			.AddCommandLineEx(args, CreateCommandLineApplication);
 		}
 
 		private void EnsureConfigFileExists(string confFile, IConfigurationRoot conf)
